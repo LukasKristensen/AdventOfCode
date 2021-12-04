@@ -31,7 +31,7 @@ for drawn in numbersArray:
     for y in range(len(boardsArray)):
         for x in range(len(boardsArray[0])):
             if ((y+1) % 6) == 0:
-                pass
+                continue
             elif int(drawn) == (boardsArray[y][x]):
                 ifBingo = checkIfBingo(boardsArray[y])
                 column = []
@@ -40,8 +40,6 @@ for drawn in numbersArray:
                 if not ifBingo:
                     ifBingo = checkIfBingo(column)
                 if ifBingo:
-                    calculateResult(boardsArray[y - (y % 6):y - (y % 6) + 5], drawn, y - (y % 6), False)
-            else:
-                pass
+                    calculateResult(boardsArray[y - (y % 6):y - (y % 6) + 5], drawn, y - (y % 6), True)
 
 
