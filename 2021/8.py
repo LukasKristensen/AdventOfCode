@@ -1,7 +1,6 @@
 with open('8.txt') as d:
     dataSplit = d.read().splitlines()
     counter = 0
-    output2 = 0
 
     for i in dataSplit:
         tmpOutput = ((i.split(" | "))[1].split(" "))
@@ -10,7 +9,9 @@ with open('8.txt') as d:
             for z in segments:
                 if len(x)==len(z):
                     counter+=1
+    print("Part1",counter)
 
+    output2 = 0
     for i in dataSplit:
         tmpOutput = ((i.split(" | "))[1].split(" "))
         segments = ["cf", "bcdf", "acf", "abcdefg"]
@@ -24,4 +25,4 @@ with open('8.txt') as d:
                     tmpHold+=str(segments[z])
         if tmpHold != "":
             output2+=int(tmpHold)
-    print(counter)
+    print("Part2",output2)
