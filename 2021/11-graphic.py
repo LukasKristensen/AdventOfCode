@@ -1,3 +1,8 @@
+import tkinter as tk
+from tkinter import *
+import time
+import random
+iterationData = []
 dumboArray = []
 flashCount = 0
 checkIfNotFlashed = []
@@ -36,6 +41,12 @@ def energyGain(y,x):
 def simulate():
     iterationCount = 0
     while True:
+        global iterationData
+        if iterationCount <= 100:
+            iterationData.append(dumboArray.copy())
+        #print("dumbo",dumboArray)
+        #print("iterationData",iterationData)
+
         iterationCount+=1
         setTrue()
         for y in range(len(dumboArray)):
@@ -44,15 +55,13 @@ def simulate():
 
         if iterationCount == 100:
             print("Part1:",flashCount)
+            return iterationData
 
         anyTrue = any(any(row) for row in checkIfNotFlashed)
 
         if not anyTrue:
             print("Part2:",iterationCount)
             break
-        for p in (dumboArray):
-
-            print(p)
 
 
 with open('11.txt') as d:
@@ -63,7 +72,31 @@ with open('11.txt') as d:
         for x in range(len(dataSplit[y])):
             dumboArray[y].append(int(dataSplit[y][x]))
             checkIfNotFlashed[y].append(1)
+    getData = simulate()
 
-    simulate()
+values = {0:"#272727", 1:"#434343", 2:"#646464", 3:"#7B7B7B", 4:"#989898", 5:"#BABABA", 6:"#D0D0D0", 7:"#E2E2E2", 8:"#F2F2F2", 9:"#FBFBFB"}
+window = Tk()
+window.title("Day11 - Visualized")
+iterationNum = 0
+
+def drawSimulation():
+    global iterationData
+    rando = random.randint(0,99)
+    print(iterationNum)
+    print(iterationData)
+
+    print("Printing Array")
+    for i in iterationData[0][rando]:
+        print (i)
 
 
+    for y in range(10):
+        for x in range(10):
+            UI_frame = Frame(window, width= 25, height=25, bg=values[iterationData[rando][y][x]])
+            UI_frame.grid(row=y, column=x)
+
+
+sceneUpdateButton = tk.Button(window, width=2, height=1, command=drawSimulation)
+sceneUpdateButton.grid(row=100, column=50)
+
+window.mainloop()
