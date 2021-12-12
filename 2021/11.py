@@ -50,10 +50,6 @@ def simulate():
         if not anyTrue:
             print("Part2:",iterationCount)
             break
-        for p in (dumboArray):
-
-            print(p)
-
 
 with open('11.txt') as d:
     dataSplit = d.read().splitlines()
@@ -65,5 +61,3 @@ with open('11.txt') as d:
             checkIfNotFlashed[y].append(1)
 
     simulate()
-
-
