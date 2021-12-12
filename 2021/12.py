@@ -1,24 +1,38 @@
 waysFound = []
 
 def clearPath(arrayWays, toDelete):
-    print("test")
+    i = 0
+    while i < len(arrayWays):
+        if (arrayWays[i][0] == toDelete) or (arrayWays[i][1] == toDelete):
+            arrayWays.pop(i)
+        else:
+            i+=1
+    return arrayWays
+
+
+iterations = 0
 
 def findWays(arrayWays, lastWay, pathTrace):
+    print("new iteration:",pathTrace)
+    global iterations
+    iterations+=1
+    if lastWay[0].islower() and len(pathTrace)>1:
+        print("Running destroy")
+        arrayWays = clearPath(arrayWays, lastWay)
+
     for m in range(len(arrayWays)):
-        if m < len(arrayWays)-1:
-            if (arrayWays[m][0] == "end" and arrayWays[m][1] == lastWay) or (arrayWays[m][1] == "end" and arrayWays[m][0] == lastWay):
-                waysFound.append(pathTrace)
-                return
-            elif arrayWays[m][0] == lastWay:
-                tmpArray = arrayWays.copy()
+        tmpArray = arrayWays.copy()
+        if m < len(tmpArray)-1:
+            if (tmpArray[m][0] == "end" and tmpArray[m][1] == lastWay) or (tmpArray[m][1] == "end" and tmpArray[m][0] == lastWay):
+                waysFound.append(pathTrace+tmpArray[m])
+                continue
+            elif tmpArray[m][0] == lastWay:
                 tmpArray.pop(m)
-                pathTrace.append(tmpArray[m])
-                findWays(tmpArray, arrayWays[m][1], pathTrace)
-            elif arrayWays[m][1] == lastWay:
-                tmpArray = arrayWays.copy()
-                pathTrace.append(tmpArray[m])
+                findWays(tmpArray, tmpArray[m][1], pathTrace+tmpArray[m])
+            elif tmpArray[m][1] == lastWay:
                 tmpArray.pop(m)
-                findWays(tmpArray, arrayWays[m][0], pathTrace)
+                findWays(tmpArray, arrayWays[m][0], pathTrace+tmpArray[m])
+    print("Ended search")
 
 
 with open('12.txt') as d:
@@ -43,9 +57,10 @@ with open('12.txt') as d:
 
     for s in startPositions:
         arrayPos = s[1] if s[0] == "start" else s[0]
+        print("Running:",s)
         findWays(middlePositions,arrayPos,[arrayPos])
 
     print("Found ways:")
     for i in waysFound:
         print(i)
-    print("amount",len(waysFound))
+    print(iterations,"amount",len(waysFound))
