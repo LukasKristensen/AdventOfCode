@@ -1,13 +1,12 @@
-arrayRisk = []
-riskTrack = []
-stack = []
+arrayRisk, riskTrack = [], []
 leastRisk = 0
 
 def isvalid(y,x):
-    return (y >= 0 and y<len(arrayRisk)) and (x >= 0 and x <len(arrayRisk[y]))
+    return (0 <= y < len(arrayRisk)) and (0 <= x < len(arrayRisk[y]))
 
 def walk(posY, posX, currentRisk):
-    currentRisk += arrayRisk[posY][posX]
+    if posY+posX != 0:
+        currentRisk += arrayRisk[posY][posX]
 
     if (riskTrack[posY][posX] > currentRisk) or (riskTrack[posY][posX] == -1):
         riskTrack[posY][posX] = currentRisk
@@ -18,27 +17,12 @@ def walk(posY, posX, currentRisk):
     if posY == len(arrayRisk)-1 and posX == len(arrayRisk[0])-1:
         global leastRisk
         if currentRisk < leastRisk or leastRisk == 0:
-            print("Done!", currentRisk)
             leastRisk = currentRisk
-
-    elif checkY and checkX:
-        if arrayRisk[posY+1][posX] < arrayRisk[posY][posX+1]:
-            walk(posY+1, posX, currentRisk)
-        else:
-            if checkX:
-                walk(posY, posX+1, currentRisk)
-    elif checkY:
-        walk(posY + 1, posX, currentRisk)
-    elif checkX:
-        walk(posY, posX + 1, currentRisk)
-    else:
-        return
-
-
+    if checkY: walk(posY + 1, posX, currentRisk)
+    if checkX: walk(posY, posX + 1, currentRisk)
 
 with open('15.txt') as d:
     dataSplit = d.read().splitlines()
-
     for l in range(len(dataSplit)):
         arrayRisk.append([])
         riskTrack.append([])
@@ -47,10 +31,6 @@ with open('15.txt') as d:
             riskTrack[l].append(-1)
     for i in arrayRisk:
         print (i)
-
-    walk(0,0,0)
-
-    for i in riskTrack:
-        print (i)
-
+    walk(0,0,-1)
     print("Least risk:",leastRisk)
+
