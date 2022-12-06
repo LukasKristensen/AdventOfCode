@@ -10,7 +10,8 @@ for i in range(3, len(data)):
     if len(seen_data) == 4 and not first_task_found:
         first_task_found = True
         print("6a)",i+1)
-    if len(seen_data_second) == 15:
+    if len(seen_data_second) == 15 and i > 14:
         print("6b)",i+1)
         break
+
 
