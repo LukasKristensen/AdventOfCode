@@ -11,10 +11,7 @@ for i in range(len(data)):
 for y in range(1, len(formatted) - 1):
     for x in range(1, len(formatted[0]) - 1):
         current_value = formatted[y][x]
-        left_side = formatted[y][:x]
-        right_side = formatted[y][x + 1:]
-        up_side = []
-        down_side = []
+        left_side, right_side, up_side, down_side = formatted[y][:x], formatted[y][x+1:], [], []
 
         for up in range(y):
             up_side.append(formatted[y - up - 1][x])
@@ -25,28 +22,20 @@ for y in range(1, len(formatted) - 1):
                 trees_visible += 1
                 break
 
-        s_right, s_left, s_up, s_down = 0,0,0,0
-        for i in right_side:
-            s_right += 1
-            if current_value <= i:
-                break
-        for i in down_side:
-            s_down += 1
-            if current_value <= i:
-                break
-        for i in left_side[::-1]:
-            s_left += 1
-            if current_value <= i:
-                break
-        for i in up_side:
-            s_up += 1
-            if current_value <= i:
-                break
-        scenic_score = s_up*s_down*s_left*s_right
+        scenic_score = 1
+        tree_sight = []
+        for i in [right_side, down_side, left_side[::-1], up_side]:
+            tree_sight.append(0)
+            for t in i:
+                tree_sight[-1] += 1
+                if current_value <= t:
+                    break
+            scenic_score *= tree_sight[-1]
+
         if scenic_score > max_scenic_score:
             max_scenic_score = scenic_score
 
 print("8a)", trees_visible + len(formatted) * 2 + len(formatted[0]) * 2 - 4)
 print("8b)", max_scenic_score)
 
-# 235200
+
