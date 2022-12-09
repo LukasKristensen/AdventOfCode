@@ -1,22 +1,32 @@
-H, T = [0,0], [0,0]
-T_visit = {}
+import numpy as np
+
+
+H, knots, T_visit_a, T_visit_b = [], [0]*10, {}, {}
 
 for i in open('day9_data.txt').read().splitlines():
     direction, distance = i.split(" ")
     for x in range(int(distance)):
-        previous_head = H.copy()
+        previous = knots
+
         if direction == 'U':
-            H[1] += 1
+            knots[0] += 1
         elif direction == 'D':
-            H[1] -= 1
+            knots[0] -= 1
         elif direction == 'R':
-            H[0] += 1
+            knots[0] += 1j
         elif direction == 'L':
-            H[0] -= 1
-        for d in range(2):
-            if abs(H[d]-T[d]) > 1:
-                T = previous_head
-                T_visit[str(T[0])+" "+str(T[1])] = 0
-                break
-print("9a", len(T_visit)+1)
+            knots[0] -= 1j
+
+        for k in range(1, len(knots)):
+            difference = knots[k - 1] - knots[k]
+            signed_difference = np.sign(difference.real) + 1j * np.sign(difference.imag)
+            if abs(difference) >= 2:
+                knots[k] += signed_difference
+        T_visit_a[str(knots[1])] = 0
+        T_visit_b[str(knots[-1])] = 0
+
+print("9a", len(T_visit_a))
+print("9b", len(T_visit_b))
+
+
 
