@@ -18,15 +18,11 @@ def draw():
 
 
 for i in data:
-    command = i[:4]
     draw()
-    if command == "addx":
+    if i[:4] == "addx":
         draw()
         value += int(i.split(" ")[1])
 
 print("10a)", summed_signal_strength)
-print("10b)")
-for row in screen:
-    print(row)
-
+print("10b)",*screen,sep="\n")
 
