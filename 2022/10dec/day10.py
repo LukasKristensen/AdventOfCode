@@ -1,6 +1,6 @@
 data = open('day10_data.txt').read().splitlines()
-cpu_cycles = [20, 60, 100, 140, 180, 220]
-screen = ["", "", "", "", "", "", "", ""]
+cpu_cycles = [-20+x*40 for x in range(1, 6)]
+screen = ["" for x in range(6)]
 summed_signal_strength, value, cycle, row = 0, 1, 0, -1
 
 
