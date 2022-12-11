@@ -1,10 +1,8 @@
-import copy
-import math
+import copy, math
 
 data = open('day11_data.txt').read().splitlines()
-monkey_count = 0
+monkey_count, product = 0, 0
 monkeys, monkeys_second = [], []
-product_modulo = 0
 
 
 class Monkey:
@@ -21,21 +19,19 @@ class Monkey:
         item = self.inventory.pop(0)
 
         if self.operation_type == 'multiply':
-            if self.operation_number != 'old':
-                item *= int(self.operation_number)
-            else:
-                item *= item
+            item *= int(self.operation_number) if self.operation_number != 'old' else item
         if self.operation_type == 'addition':
             item += int(self.operation_number)
-        if self.worried:
-            item = (item/3)
-            item = int(item-(item%1))
-        else:
-            item %= product_modulo
-        if item % self.testing_variables[0] == 0:
-            monkeys[self.testing_variables[1]].inventory.append(item)
-        else:
-            monkeys[self.testing_variables[2]].inventory.append(item)
+        item = int((item/3)-((item/3) % 1)) if self.worried else item % product
+        monkeys[self.testing_variables[1]].inventory.append(item) if item % self.testing_variables[0] == 0 else monkeys[self.testing_variables[2]].inventory.append(item)
+
+
+def calculate_monkey_business(monkeys_input):
+    inspections = []
+    for monkey in range(len(monkeys_input)):
+        inspections.append(monkeys_input[monkey].inspections)
+    inspections.sort()
+    return inspections[-1]*inspections[-2]
 
 
 for i in range(int(len(data)/7)+1):
@@ -57,16 +53,11 @@ for x in range(20):
         for i in range(len(m.inventory)):
             m.throw()
 
-inspections = []
-for m in range(len(monkeys)):
-    inspections.append(monkeys[m].inspections)
-inspections.sort()
-
-print("11a:)",inspections[-1]*inspections[-2])
+print("11a:)",calculate_monkey_business(monkeys))
 
 
 monkeys = monkeys_second
-product_modulo = math.prod(m.testing_variables[0] for m in monkeys_second)
+product = math.prod(m.testing_variables[0] for m in monkeys_second)
 for m in monkeys:
     m.worried = False
 
@@ -75,11 +66,6 @@ for x in range(10000):
         for i in range(len(m.inventory)):
             m.throw()
 
-inspections_not_worried = []
-for m in range(len(monkeys)):
-    inspections_not_worried.append(monkeys_second[m].inspections)
-inspections_not_worried.sort()
-
-print("11b:)",inspections_not_worried[-1]*inspections_not_worried[-2])
+print("11b:)",calculate_monkey_business(monkeys))
 
 
