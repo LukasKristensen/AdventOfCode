@@ -1,8 +1,7 @@
 import copy, math
 
 data = open('day11_data.txt').read().splitlines()
-monkey_count, product = 0, 0
-monkeys, monkeys_second = [], []
+monkeys, monkeys_second, product = [], [], 0
 
 
 class Monkey:
@@ -42,9 +41,6 @@ for i in range(int(len(data)/7)+1):
     new_monkey = Monkey(items_get, operation_type_get, operation_number_get, testing_variables_get, True)
     monkeys.append(new_monkey)
     monkeys_second.append(new_monkey)
-
-    if data == "":
-        monkey_count += 1
 
 monkeys_second = copy.deepcopy(monkeys)
 
