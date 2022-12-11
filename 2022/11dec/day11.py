@@ -40,15 +40,9 @@ for i in range(int(len(data)/7)+1):
     testing_variables_get = [int(data[i*7+3].split(" ")[-1]), int(data[i*7+4].split(" ")[-1]), int(data[i*7+5].split(" ")[-1])]
     new_monkey = Monkey(items_get, operation_type_get, operation_number_get, testing_variables_get, True)
     monkeys.append(new_monkey)
-    monkeys_second.append(new_monkey)
 
 monkeys_second = copy.deepcopy(monkeys)
-
-for x in range(20):
-    for m in monkeys:
-        for i in range(len(m.inventory)):
-            m.throw()
-
+[m.throw() for x in range(20) for m in monkeys for i in range(len(m.inventory))]
 print("11a:)",calculate_monkey_business(monkeys))
 
 
@@ -57,11 +51,7 @@ product = math.prod(m.testing_variables[0] for m in monkeys_second)
 for m in monkeys:
     m.worried = False
 
-for x in range(10000):
-    for m in monkeys:
-        for i in range(len(m.inventory)):
-            m.throw()
-
+[m.throw() for x in range(10000) for m in monkeys for i in range(len(m.inventory))]
 print("11b:)",calculate_monkey_business(monkeys))
 
 
