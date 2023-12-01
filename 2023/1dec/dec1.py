@@ -8,7 +8,8 @@ for i in open("input.txt", "r").read().splitlines():
             first_digit = i[x]
         if i[-x-1].isdigit() and not last_digit:
             last_digit = i[-x-1]
-    print("1a)", int(first_digit+last_digit))
+    part_one += int(first_digit+last_digit)
+print("1a)", part_one)
 
 
 for i in open("input.txt", "r").read().splitlines():
@@ -19,5 +20,6 @@ for i in open("input.txt", "r").read().splitlines():
                 first_digit = value
             if (key in i[-x-1:] or value in i[-x-1:]) and not last_digit:
                 last_digit = value
-    print("1b)", int(first_digit+last_digit))
+    part_two += int(first_digit+last_digit)
+print("1b)", part_two)
 
