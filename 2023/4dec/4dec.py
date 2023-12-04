@@ -7,17 +7,14 @@ for i in range(len(data_load)):
 
 for i in range(len(data_load)):
     winning_nums, picked_nums = data_load[i].split(' | ')
-    winning_nums_sorted = filter(None, winning_nums.split(": ")[-1].replace("  ", " ").split(" "))
-    picked_nums_sorted = filter(None, picked_nums[0:].replace("  ", " ").split(" "))
-
-    new_winning = [int(x) for x in winning_nums_sorted]
-    new_picked = [int(y) for y in picked_nums_sorted]
+    winning_nums = [int(x) for x in filter(None, winning_nums.split(": ")[-1].replace("  ", " ").split(" "))]
+    picked_nums = [int(y) for y in filter(None, picked_nums[0:].replace("  ", " ").split(" "))]
 
     amount_matches = 0
     match_score = 0
 
-    for x in new_picked:
-        if x in new_winning:
+    for x in picked_nums:
+        if x in winning_nums:
             amount_matches += 1
             if match_score == 0:
                 match_score = 1
