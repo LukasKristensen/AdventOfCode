@@ -1,5 +1,5 @@
 data_load = open("input.txt", "r").read().splitlines()
-part_one, part_two = 0, 0
+part_one = 0
 scratch_cards = {}
 
 for i in range(len(data_load)):
@@ -23,7 +23,7 @@ for i in range(len(data_load)):
     part_one += match_score
 
     for b in range(1, amount_matches+1):
-        scratch_cards[i+b] += 1*scratch_cards[i]
+        scratch_cards[i+b] += scratch_cards[i]
 
 print("Part one:", part_one)
 print("Part two:", sum([scratch_cards[b] for b in scratch_cards]))
