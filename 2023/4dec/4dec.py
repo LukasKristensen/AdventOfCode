@@ -5,10 +5,9 @@ scratch_cards = {}
 for i in range(len(data_load)):
     scratch_cards[i] = 1
 
-for i in range(len(data_load)):
-    winning_nums, picked_nums = data_load[i].split(' | ')
-    winning_nums = [int(x) for x in filter(None, winning_nums.split(": ")[-1].replace("  ", " ").split(" "))]
-    picked_nums = [int(y) for y in filter(None, picked_nums[0:].replace("  ", " ").split(" "))]
+for i, val in enumerate(data_load):
+    winning_nums = [int(x) for x in filter(None, val.split('|')[0].split(": ")[-1].split(" "))]
+    picked_nums = [int(y) for y in filter(None, val.split('|')[1].split(" "))]
 
     amount_matches = 0
     match_score = 0
