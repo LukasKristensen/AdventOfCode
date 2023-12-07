@@ -56,23 +56,13 @@ for i, val in enumerate(data_load):
     if not rank:
         rank = 0
 
-    kicker_hand = [rank]
-    for i in cards:
-        kicker_hand.append(kickers[i])
+    kicker_hand = [rank] + [kickers[i] for i in cards]
     hands.append([kicker_hand, bidding, cards])
 
+hands.sort(key=lambda x: x[0], reverse=True)
 
-for g in range(len(hands)):
-    for x in range(len(hands)-1):
-        for k in range(6):
-            if hands[x][0][k] > hands[x+1][0][k]:
-                break
-            elif hands[x][0][k] < hands[x+1][0][k]:
-                first_hold, second_hold = hands[x], hands[x+1]
-                hands[x], hands[x+1] = second_hold, first_hold
-                break
+for i, hand in enumerate(hands):
+    betting = int(hand[1])
+    part_two += (len(hands) - i) * betting
 
-for i in range(len(hands)):
-    betting = int(hands[i][1])
-    part_two += (len(hands)-i)*betting
-print("part two:", part_two)
+print("part one:", part_two)
