@@ -5,10 +5,7 @@ final_differences = []
 for i in range(len(data_formatted)):
     differences = [data_formatted[i]]
     while differences[-1] != [0]*len(differences[-1]):
-        difference_iteration = []
-        for x in range(1, len(differences[-1])):
-            difference_iteration.append(int(differences[-1][x])-int(differences[-1][x-1]))
-        differences.append(difference_iteration)
+        differences.append([int(differences[-1][x])-int(differences[-1][x-1]) for x in range(1, len(differences[-1]))])
     final_differences.append(differences)
 
 for i in range(len(final_differences)):
