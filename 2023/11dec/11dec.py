@@ -31,7 +31,6 @@ for i in locations:
             checked_locations.append((i, j))
             distance += abs(i[0] - j[0]) + abs(i[1] - j[1])
 
-print("additional_multiply: ", additional_multiply)
 print("part_one: ", distance+additional_multiply)
 print("part_two: ", distance+(additional_multiply*1000000)-additional_multiply)
 
