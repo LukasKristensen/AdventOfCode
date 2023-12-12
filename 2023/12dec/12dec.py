@@ -5,10 +5,6 @@ possibility_count = 0
 def day_12(data, nums):
     global possibility_count
     nums = nums.split(",")
-
-    print("Data:", data)
-    print("Nums:", nums)
-
     possibilities, index_list, solutions = [], [], []
 
     for x in range(len(data)):
@@ -34,7 +30,6 @@ def day_12(data, nums):
                 break
             if g == len(groups)-1:
                 possibility_count += 1
-    print("Input:", i, "possibility_count", possibility_count)
 
 
 for i in data_load:
