@@ -1,24 +1,20 @@
 data_load = open("input.txt", "r").read().splitlines()
-print("Data:", data_load)
-possibilities_nums = []
+possibility_count = 0
 
-for i in range(len(data_load)):
-    print("Line:", i, "of", len(data_load))
-    i = data_load[i]
 
-    data, nums = i.split(" ")
+def day_12(data, nums):
+    global possibility_count
     nums = nums.split(",")
-    print("Data:", data, "nums:", nums)
 
-    possibilities = []
-    index_list = []
+    print("Data:", data)
+    print("Nums:", nums)
 
-    # Get all indexes which can have different solutions
+    possibilities, index_list, solutions = [], [], []
+
     for x in range(len(data)):
         if data[x] == "?":
             index_list.append(x)
 
-    # Get all possible solutions where each ? is replaced by 0 or 1 while keeping the remaining data
     for x in range(2**len(index_list)):
         possibilities.append(data)
         for y in range(len(index_list)):
@@ -27,32 +23,29 @@ for i in range(len(data_load)):
             else:
                 possibilities[x] = possibilities[x].replace("?", ".", 1)
 
-    possibility_count = 0
-    solutions = []
     for x in possibilities:
-        temp_nums = nums.copy()
-        groups = x.split(".")
+        groups = [y for y in x.split(".") if y != ""]
 
-        new_groups = []
-        # remove all empty groups
-        for y in groups:
-            if y != "":
-                new_groups.append(y)
-        groups = new_groups
-
-        if len(groups) != len(temp_nums):
+        if len(groups) != len(nums):
             continue
 
-        solution_found = True
-        # Check if the amount of # is equal to the amount of nums
         for g in range(len(groups)):
             if int(nums[g]) * "#" != groups[g]:
-                solution_found = False
                 break
-        if solution_found:
-            print("FOUND SOLUTION:", x)
-            possibility_count += 1
-    possibilities_nums.append(possibility_count)
+            if g == len(groups)-1:
+                possibility_count += 1
+    print("Input:", i, "possibility_count", possibility_count)
 
-print("possibilities:", possibilities_nums)
-print("Sum:", sum(possibilities_nums))
+
+for i in data_load:
+    data, nums = i.split(" ")
+    day_12(data, nums)
+print("Part 1:", possibility_count)
+
+possibility_count = 0
+for i in data_load:
+    data, nums = i.split(" ")
+    data = data+"?"+data+"?"+data+"?"+data+"?"+data
+    nums = nums+","+nums+","+nums+","+nums+","+nums
+    day_12(data, nums)
+print("Part 2:", possibility_count)
